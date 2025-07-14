@@ -1,0 +1,52 @@
+name: Build Serial ChuniIO
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'ChuniSerialController/chuniio/**'
+  pull_request:
+    branches: [ master ]
+    paths:
+      - 'ChuniSerialController/chuniio/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+        working-directory: ChuniSerialController/chuniio
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW32
+          update: true
+          install: >-
+            mingw-w64-i686-gcc
+            mingw-w64-i686-make
+
+      - name: Build Chuni DLL
+        run: |
+          gcc -shared -o chuniio_serial.dll chuniio.c config.c -luser32 -lkernel32
+
+      - name: Upload DLL Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: chuniio_serial-dll
+          path: ChuniSerialController/chuniio/chuniio_serial.dll
+
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ChuniSerialController/chuniio/chuniio_serial.dll
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
