@@ -86,6 +86,11 @@ HRESULT chuni_io_slider_init(void)
     return S_OK;
 }
 
+HRESULT chuni_io_led_init(void)
+{
+    return S_OK;
+}
+
 void chuni_io_slider_start(chuni_io_slider_callback_t callback)
 {
     if (chuni_io_slider_thread != NULL) {
