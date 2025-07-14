@@ -4,8 +4,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "chuniio/chuniio.h"
-#include "chuniio/config.h"
+#include "ChuniSerialController/chuniio/chuniio.h"
+#include "ChuniSerialController/chuniio/config.h"
 
 static unsigned int __stdcall chuni_io_slider_thread_proc(void *ctx);
 
