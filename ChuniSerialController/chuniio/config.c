@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <stdio.h>
 
-#include "ChuniSerialController/chuniio/config.h"
+#include "config.h"
 
 
 void chuni_io_config_load(
