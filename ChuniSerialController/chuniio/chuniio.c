@@ -91,6 +91,16 @@ HRESULT chuni_io_led_init(void)
     return S_OK;
 }
 
+void chuni_io_led_set_colors(uint8_t board,uint8_t *rgb_raw)
+{
+    uint8_t air_rgb[3];
+    if(board == 0){
+        air_rgb[0] = rgb_raw[152];
+        air_rgb[1] = rgb_raw[150];
+        air_rgb[2] = rgb_raw[151];
+    }
+}
+
 void chuni_io_slider_start(chuni_io_slider_callback_t callback)
 {
     if (chuni_io_slider_thread != NULL) {
